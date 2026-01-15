@@ -1,0 +1,16 @@
+<h3> {{talaba.ism}} {{talaba.familiya}} {{talaba.otasining_ismi}} </h3>
+<hr>
+<p>Guruhi: {{talaba.guruh}} </p>
+<br>
+<p>Kurs: {{talaba.kurs}} </p>
+<br>
+<p>Telefon: {{talaba.tel}} </p>
+<hr>
+<h4>Kutubxonadan olgan kitoblari</h4>
+<hr>
+{% for record in talaba.record_set.all %}
+    <a href="/recordlar/{{record.id}}/"> {{forloop.counter}}. {{record.kitob.nomi}} | {{record.olingan_sana}} </a>
+    <br>
+{% endfor %}
+<hr>
+<a href="/talabalar/">Ortga qaytish</a>

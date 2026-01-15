@@ -1,0 +1,11 @@
+<h3> {{ muallif.ism|upper }} {{ muallif.familiya|upper }} </h3>
+<hr>
+<p>Tug'ilgan sana: {{muallif.tugilgan_sana}} </p>
+<hr>
+<h4>Asarlari</h4>
+{% for kitob in muallif.kitob_set.all %}
+    <a href="/kitoblar/{{kitob.id}}/">{{ forloop.counter }}. {{ kitob.nomi }} </a>
+    <br>
+{% endfor %}
+<hr>
+<a href="/mualliflar/">Ortga qaytish</a>

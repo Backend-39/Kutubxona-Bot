@@ -1,0 +1,8 @@
+<h2>Talabalar ro'yhati</h2>
+<hr>
+{% for talaba in talabalar %}
+    <a href="/talabalar/{{talaba.id}}/">{{forloop.counter}}. {{talaba.ism}} {{talaba.familiya}} {{talaba.otasining_ismi}} </a>
+    <br>
+{% endfor %}
+<hr>
+<a href="/">Ortga qaytish</a>

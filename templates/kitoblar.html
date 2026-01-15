@@ -1,0 +1,8 @@
+<h2>Kitoblar ro'yhati</h2>
+<hr>
+{% for kitob in kitoblar %}
+    <a href="/kitoblar/{{ kitob.id }}/"> {{ forloop.counter }}. {{ kitob.nomi}} </a>
+    <br>
+{% endfor %}
+<hr>
+<a href="/">Ortga qaytish</a>

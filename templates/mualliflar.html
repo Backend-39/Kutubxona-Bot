@@ -1,0 +1,8 @@
+<h1>Mualliflar ro'yhati</h1>
+
+{% for muallif in mualliflar %}
+    <a href="/mualliflar/{{muallif.id}}/"> {{forloop.counter}}. {{ muallif.ism }} {{ muallif.familiya }} </a>
+    <br>
+{% endfor %}
+<hr>
+<a href="/">Ortga qaytish</a>

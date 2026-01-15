@@ -1,0 +1,13 @@
+<h2>Recordlar</h2>
+<hr>
+{% for record in recordlar %}
+    <a href="/recordlar/{{record.id}}/">
+        {{forloop.counter}}. 
+        {{record.talaba.ism}} {{record.talaba.familiya}} | 
+        {{record.kitob.nomi}} | 
+        {{record.olingan_sana}}
+    </a>
+    <br>
+{% endfor %}
+<hr>
+<a href="/">Ortga qaytish</a>
