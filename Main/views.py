@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from .models import *
@@ -61,3 +61,17 @@ def record_info_view(request,record_id):
         "record": record
     }
     return render(request,"record_info.html",context)
+
+def kitob_delete_confirm_view(request,kitob_id):
+    kitob=Kitob.objects.get(id=kitob_id)
+    context={
+        "name": f"{kitob.nomi}",
+        "yes_link": f"/kitoblar/{kitob.id}/delete",
+        "no_link": "/kitoblar/"
+    }
+    return render(request,"delete_confirm.html",context)
+
+def kitob_delete_view(request,kitob_id):
+    kitob=Kitob.objects.get(id=kitob_id)
+    kitob.delete()
+    return redirect("/kitoblar/")

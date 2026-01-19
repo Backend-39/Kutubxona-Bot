@@ -30,4 +30,7 @@ urlpatterns = [
     path("talabalar/<int:talaba_id>/",talaba_info_view),
     path("recordlar/",recordlar_views),
     path("recordlar/<int:record_id>/",record_info_view),
+    path("kitoblar/<int:kitob_id>/delete/confirm",kitob_delete_confirm_view),
+    path("kitoblar/<int:kitob_id>/delete/",kitob_delete_view),
+
 ]

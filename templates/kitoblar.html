@@ -2,6 +2,11 @@
 <hr>
 {% for kitob in kitoblar %}
     <a href="/kitoblar/{{ kitob.id }}/"> {{ forloop.counter }}. {{ kitob.nomi}} </a>
+    <a href="/kitoblar/{{kitob.id}}/delete/confirm/">
+        <button>
+            O'chirish
+        </button>
+    </a>
     <br>
 {% endfor %}
 <hr>
