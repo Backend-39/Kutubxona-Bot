@@ -1,14 +1,114 @@
-<h2>Kitoblar ro'yhati</h2>
-<hr>
-{% for kitob in kitoblar %}
-    <a href="/kitoblar/{{ kitob.id }}/"> {{ forloop.counter }}. {{ kitob.nomi}} </a>
-    <a href="/kitoblar/{{kitob.id}}/delete/confirm/" style="margin-left: 10px;">
-        <button>
-            O'chirish
-        </button>
-    </a>
-    <br>
-    <br>
-{% endfor %}
-<hr>
-<a href="/">Ortga qaytish</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kutubxona | Kitoblar</title>
+    <style>
+        .kitob_nomi {
+            color: rgb(58, 88, 200);
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .delete_button {
+            text-decoration: none;
+            border: 1px solid red;
+            border-radius: 5px;
+            padding: 2px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/kitoblar/?filter_value={{filter_value}}&search_value={{search_value}}#kitoblar">Kitoblar ro'yhati</a>
+            <br>
+            <a href="/kitoblar/?filter_value={{filter_value}}&search_value={{search_value}}#kitob_qidirish">Kitob qidirish</a>
+            <br>
+        </nav>
+    </header>
+    <hr>
+    <main>
+        <section id="kitob_qoshish">
+            <form method="post" action="/kitoblar/add_kitob/">
+                {% csrf_token %}
+                <label for="nomi">Nomi:</label>
+                <input type="text" name="nomi" id="nomi" required>
+                <br><br>
+                <label for="janr">Janr:</label>
+                <input type="text" name="janr" id="janr" required>
+                <br><br>
+                <label for="sahifa">Sahifa:</label>
+                <input type="number" name="sahifa" id="sahifa" required>
+                <br><br>
+                <label for="mualliflar">Muallif:</label>
+                <select name="muallif_id" id="mualliflar" required>
+                    {%for muallif in mualliflar%}
+                        <option value="{{muallif.id}}">{{muallif.ism}} {{muallif.familiya}}</option>
+                    {%endfor%}
+                </select>
+                <br><br>
+                <button style="width: 250px; height: 25px;">Qo'shish</button>
+            </form>
+        </section>
+        <hr>
+        <section id="kitoblar">
+            <h2>Qo'shilgan kitoblar ro'yhati</h2>
+            <form>
+                <select name="filter_value" id="filter">
+                    <option value="id" {% if filter_value == "id" or not filter_value %} selected {%endif%}>ID bo'yicha</option>
+                    <option value="nomi" {% if filter_value == "nomi" %} selected {%endif%}>Nomi bo'yicha</option>
+                    <option value="-nomi" {% if filter_value == "-nomi" %} selected {%endif%}>Nomi bo'yicha (teskari)</option>
+                    <option value="sahifa" {% if filter_value == "sahifa" %} selected {%endif%}>Sahifasi bo'yicha</option>
+                    <option value="-sahifa" {% if filter_value == "-sahifa" %} selected {%endif%}>Sahifasi bo'yicha (teskari)</option>
+                </select>
+                <input type="hidden" name="search_value" value="{{search_value|default:''}}">
+                <button style="margin-left: 20px;">
+                    Qo'llash
+                </button>
+            </form>
+            <br>
+            {% for kitob in kitoblar %}
+                <a href="/kitoblar/{{ kitob.id }}/" class="kitob_nomi"> {{ forloop.counter }}. {{ kitob.nomi}} </a>
+                <a href="/kitoblar/{{kitob.id}}/delete/confirm/" style="margin-left: 10px;" class="delete_button">
+                    O'chirish
+                </a>
+                <br>
+                <br>
+            {% endfor %}
+        </section>
+        <hr>
+        <section id="kitob_qidirish">
+            <h3>Kitob qidirish</h3>
+            <form>
+                <label for="search">Kitob nomini kiriting:</label>
+                <input 
+                    type="text" 
+                    name="search_value" 
+                    id="search" 
+                    value="{{ search_value|default:''}}">
+                <input type="hidden" name="filter_value" value="{{filter_value|default:'id'}}">
+                <button>
+                    Qidirish
+                </button>
+            </form>
+            <br>
+            {% if searched_books %}
+                {% for kitob in searched_books %}
+                    <a href="/kitoblar/{{ kitob.id }}/" class="kitob_nomi"> {{ forloop.counter }}. {{ kitob.nomi}} </a>
+                    <a href="/kitoblar/{{kitob.id}}/delete/confirm/" style="margin-left: 10px;" class="delete_button">
+                        O'chirish
+                    </a>
+                    <br>
+                    <br>
+                {% endfor %}
+            {%endif%}
+        </section>
+    </main>
+    <hr>
+    <footer>
+        <a href="/">Ortga qaytish</a>
+    </footer>
+</body>
+</html>

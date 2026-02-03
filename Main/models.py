@@ -1,6 +1,22 @@
 from django.db import models
 
+    
+class BotUser(models.Model):
+    id=models.IntegerField(primary_key=True)
+    username=models.CharField()
+    
+
+    def __str__(self):
+        return f"{self.id} | {self.username}"
+    
 class Talaba(models.Model):
+    bot_user=models.ForeignKey(
+        BotUser,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="bot_users"
+    )
     ism=models.CharField(max_length=50)
     familiya=models.CharField(max_length=50)
     otasining_ismi=models.CharField(max_length=50)
@@ -67,3 +83,4 @@ class Record(models.Model):
     
     def __str__(self):
         return f"{self.kitob} | {self.olingan_sana}"
+

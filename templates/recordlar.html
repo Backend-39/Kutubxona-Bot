@@ -1,19 +1,86 @@
-<h2>Recordlar</h2>
-<hr>
-{% for record in recordlar %}
-    <a href="/recordlar/{{record.id}}/">
-        {{forloop.counter}}. 
-        {{record.talaba.ism}} {{record.talaba.familiya}} | 
-        {{record.kitob.nomi}} | 
-        {{record.olingan_sana}}
-    </a>
-    <a href="/recordlar/{{record.id}}/delete/confirm/" style="margin-left: 20px;">
-        <button>
-            O'chirish
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kutubxona | Recordlar</title>
+    <style>
+        label{
+            margin-bottom: 5px;
+            color: red; 
+        }
+        select{
+            width: 200px;
+            height: 25px;
+            font-size: 14px;
+        }
+        input{
+            width: 200px;
+            height: 25px;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+    <h3>Record qo'shish</h3>
+    <hr>
+    <form action="/recordlar/add_record/" method="post">
+        {%csrf_token%}
+        <label for="talaba">Talabani tanlang:</label>
+        <br>
+        <select name="talaba_id" id="talaba">
+            {%for talaba in talabalar%}
+                <option value="{{talaba.id}}">{{talaba}}</option>
+            {%endfor%}
+        </select>
+        <br>
+        <label for="kitoblar">Kitobni tanlang:</label>
+        <br>
+        <select name="kitob_id" id="kitoblar">
+            {%for kitob in kitoblar%}
+                <option value="{{kitob.id}}">{{kitob}}</option>
+            {%endfor%}
+        </select>
+        <br>
+        <label for="kutubxonachilar">Kutubxonachini tanlang:</label>
+        <br>
+        <select name="kutubxonachi_id" id="kutubxonachilar">
+            {%for kutubxonachi in kutubxonachilar%}
+                <option value="{{kutubxonachi.id}}">{{kutubxonachi}}</option>
+            {%endfor%}
+        </select>
+        <br>
+        <label for="olingan_sana">Olingan sana:</label>
+        <br>
+        <input type="datetime" name="olingan_sana" id="olingan_sana">
+        <br>
+        <label for="qaytarish_sana">Qaytarish sanasi:</label>
+        <br>
+        <input type="date" name="qaytarish_sana" id="qaytarish_sana">
+        <br>
+        <br>
+        <button style="width: 206px">
+            Qo'shish
         </button>
-    </a>
-    <br>
-    <br>
-{% endfor %}
-<hr>
-<a href="/">Ortga qaytish</a>
+    </form>
+    <hr>
+    <h2>Recordlar</h2>
+    <hr>
+    {% for record in recordlar %}
+        <a href="/recordlar/{{record.id}}/">
+            {{forloop.counter}}. 
+            {{record.talaba.ism}} {{record.talaba.familiya}} | 
+            {{record.kitob.nomi}} | 
+            {{record.olingan_sana}}
+        </a>
+        <a href="/recordlar/{{record.id}}/delete/confirm/" style="margin-left: 20px;">
+            O'chirish
+        </a>
+        <br>
+    {%endfor%}
+    
+    <hr>
+    <a href="/">Ortga qaytish</a>
+</body>
+</html>

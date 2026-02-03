@@ -1,22 +1,45 @@
-<h3> {{talaba.ism}} {{talaba.familiya}} {{talaba.otasining_ismi}} </h3>
-<hr>
-<p>Guruhi: {{talaba.guruh}} </p>
-<br>
-<p>Kurs: {{talaba.kurs}} </p>
-<br>
-<p>Telefon: {{talaba.tel}} </p>
-<hr>
-<h4>Kutubxonadan olgan kitoblari</h4>
-<hr>
-{% for record in talaba.record_set.all %}
-    <a href="/recordlar/{{record.id}}/"> {{forloop.counter}}. {{record.kitob.nomi}} | {{record.olingan_sana}} </a>
-    <br>
-{% endfor %}
-<br>
-<a href="/talabalar/{{talaba.id}}/delete/confirm/">
-    <button>
-        Talabani o'chirish
-    </button>
-</a>
-<hr>
-<a href="/talabalar/">Ortga qaytish</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kutubxona | {{talaba.ism}} {{talaba.familiya}}</title>
+    <style>
+        .btn {
+            text-decoration: none;
+            padding: 5px;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h3> {{talaba.ism}} {{talaba.familiya}} {{talaba.otasining_ismi}} </h3>
+    </header>
+    <hr>
+    <main>
+        <p>Guruhi: {{talaba.guruh}} </p>
+        <p>Kurs: {{talaba.kurs}} </p>
+        <p>Telefon: {{talaba.tel}} </p>
+        <hr>
+        <h4>Kutubxonadan olgan kitoblari</h4>
+        <hr>
+        {% for record in talaba.record_set.all %}
+            <a href="/recordlar/{{record.id}}/"> {{forloop.counter}}. {{record.kitob.nomi}} | {{record.olingan_sana}} </a>
+            <br>
+        {% endfor %}
+        <br>
+        <a href="/talabalar/{{talaba.id}}/delete/confirm/" class="btn" style="color: red;">
+            Talabani o'chirish
+        </a>
+        <a href="/talabalar/{{talaba.id}}/update_page/" class="btn" style="margin-left: 10px; color: rgb(149, 16, 211)">
+            Talaba ma'lumotlarini o'zgaritirish
+        </a>
+    </main>
+    <hr>
+    <footer>
+        <a href="/talabalar/">Ortga qaytish</a>
+    </footer>
+</body>
+</html>

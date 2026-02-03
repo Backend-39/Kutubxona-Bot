@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kutubxona | {{kitob.nomi}}</title>
+</head>
+<body>
+    <main>
+        <h3>{{kitob.nomi}} nomli kitobning ma'lumotlarini tahrirlash.</h3>
+        <hr>
+        <form action="/kitoblar/{{kitob.id}}/update" method="post">
+            {%csrf_token%}
+            
+        </form>
+    </main>
+    <footer>
+        <a href="/kitoblar/{{kitob.id}}/">Bekor qilish</a>
+    </footer>
+</body>
+</html>

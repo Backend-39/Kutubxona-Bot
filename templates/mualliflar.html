@@ -1,14 +1,114 @@
-<h1>Mualliflar ro'yhati</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kutubxon | Mualliflar</title>
+</head>
+<body>
+    <header>
+        <nav>
 
-{% for muallif in mualliflar %}
-    <a href="/mualliflar/{{muallif.id}}/"> {{forloop.counter}}. {{ muallif.ism }} {{ muallif.familiya }} </a>
-    <a href="/mualliflar/{{muallif.id}}/delete/confirm/" style="margin-left: 20px;">
-        <button>
-            O'chirish
-        </button>
-    </a>
-    <br>
-    <br>
-{% endfor %}
-<hr>
-<a href="/">Ortga qaytish</a>
+        </nav>
+    </header>
+    <hr>
+    <main>
+        <section>
+            <h3>Muallif qo'shish</h3>
+            <form method="post" action="/mualliflar/add_muallif/">
+                {%csrf_token%}
+                <label for="ism">Ism:</label>
+                <br>
+                <input type="text" name="ism" id="ism">
+                <br>
+                <label for="familiya">Familiya:</label>
+                <br>
+                <input type="text" name="familiya" id="familiya">
+                <br>
+                <label for="jinsi">Jins:</label>
+                <br>
+                <select name="jinsi" style="width: 165px;" id="jinsi">
+                    <option value="erkak">Erkak</option>
+                    <option value="ayol">Ayol</option>
+                </select>
+                <br>
+                <label for="tugilgan_sana">Tug'ilgan sana:</label>
+                <br>
+                <input type="date" name="tugilgan_sana" id="tugilgan_sana" style="width: 158px;">
+                <br>
+                <div style="margin-top: 5px;">
+                    <label for="tirik">Tirik:</label>
+                    <input type="checkbox" name="tirik" id="tirik" value="yes">
+                </div>
+                <button style="margin-top: 10px; width: 165px;">
+                    Qo'shish
+                </button>       
+            </form>
+        </section>
+        <hr>
+        <section id="mualliflar">
+            <h1>Mualliflar ro'yhati</h1>
+            <form>
+                <select name="filter_value">
+                    <option value="id" {%if filter_value == "id"%} selected {%endif%}>
+                        ID bo'yicha
+                    </option>
+                    <option value="-id" {%if filter_value == "-id"%} selected {%endif%}>
+                        ID bo'yicha (teskari)
+                    </option>
+                    <option value="ism" {%if filter_value == "ism"%} selected {%endif%}>
+                        Ism bo'yicha
+                    </option>
+                    <option value="-ism" {%if filter_value == "-ism"%} selected {%endif%}>
+                        Ism bo'yicha (teskari)
+                    </option>
+                    <option value="familiya" {%if filter_value == "familiya"%} selected {%endif%}>
+                        Familiya bo'yicha
+                    </option>
+                    <option value="-familiya" {%if filter_value == "-familiya"%} selected {%endif%}>
+                        Familiya bo'yicha (teskari)
+                    </option>
+                </select>
+                <input type="hidden" name="search_value" value="{{search_value}}">
+                <button>Qo'llash</button>
+            </form>
+            {% for muallif in mualliflar %}
+                <a href="/mualliflar/{{muallif.id}}/"> {{forloop.counter}}. {{ muallif.ism }} {{ muallif.familiya }} </a>
+                <a href="/mualliflar/{{muallif.id}}/delete/confirm/" style="margin-left: 20px;">
+                        O'chirish
+                </a>
+                <br>
+                <br>
+            {% endfor %}
+        </section>
+        <hr>
+        <section id="muallif_qidirish">
+            <h3>Muallif qidirish</h3>
+            <form>
+                <input type="text" name="search_value" value="{{search_value}}">
+                <input type="hidden" name="filter_value" value="{{filter_value}}">
+                <button>
+                    Qidirish
+                </button>
+            </form>
+            {%if qidirilgan_mualliflar %}
+                {% for muallif in qidirilgan_mualliflar %}
+                    <a href="/mualliflar/{{muallif.id}}/"> {{forloop.counter}}. {{ muallif.ism }} {{ muallif.familiya }} </a>
+                    <a href="/mualliflar/{{muallif.id}}/delete/confirm/" style="margin-left: 20px;">
+                        O'chirish
+                    </a>
+                    <br>
+                    <br>
+                {% endfor %}
+            {%endif%}
+        </section>
+    </main>
+    <hr>
+    <footer>
+        <a href="/">Ortga qaytish</a>
+    </footer>
+</body>
+</html>
+
+
+

@@ -1,14 +1,152 @@
-<h2>Talabalar ro'yhati</h2>
-<hr>
-{% for talaba in talabalar %}
-    <a href="/talabalar/{{talaba.id}}/">{{forloop.counter}}. {{talaba.ism}} {{talaba.familiya}} {{talaba.otasining_ismi}} </a>
-    <a href="/talabalar/{{talaba.id}}/delete/confirm/" style="margin-left: 20px;">
-        <button>
-            O'chirish
-        </button>
-    </a>
-    <br>
-    <br>
-{% endfor %}
-<hr>
-<a href="/">Ortga qaytish</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kutubxona | Talabalar</title>
+    <style>
+        .talaba {
+            text-decoration: none;
+            color: rgb(58, 88, 200);
+            font-size: 18px;
+        }
+        .delete_button {
+            text-decoration: none;
+            color: black;
+            border: 1px solid red;
+            padding: 2px;
+            border-radius: 5px;
+        }
+        label {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/talabalar/?filter_value={{filter_value}}&search_value={{search_value}}#talabalar">Qo'shilgan talablar</a>
+            <br>
+            <a href="/talabalar/?filter_value={{filter_value}}&search_value={{search_value}}#talaba_qidirish">Talaba qidirish</a>
+        </nav>
+    </header>
+    <hr>
+    <main>
+        <h3>Talaba qo'shish</h3>
+        <section>
+            <form method="post" action="/talabalar/add_talaba/">
+                {% csrf_token %}
+                <label for="ism">Ism:</label>
+                <br>
+                <input type="text" name="ism" id="ism">
+                <br>
+                <label for="familiya">Familiya:</label>
+                <br>
+                <input type="text" name="familiya" id="familiya">
+                <br>
+                <label for="otasining_ismi">Otasining ismi:</label>
+                <br>
+                <input type="text" name="otasining_ismi" id="otasining_ismi">
+                <br>
+                <label for="jinsi">Jinsi:</label>
+                <br>
+                <select name="jinsi" id="jinsi" style="width: 165px;">
+                    <option value="erkak">Erkak</option>
+                    <option value="ayol">Ayol</option>
+                </select>
+                <br>
+                <label for="guruh">Guruh:</label>
+                <br>
+                <input type="text" name="guruh" id="guruh">
+                <br>
+                <label for="kurs">Kurs:</label>
+                <br>
+                <input type="text" name="kurs" id="kurs">
+                <br>
+                <label for="tel">Telefon:</label>
+                <br>
+                <input type="tel" name="tel" id="tel">
+                <br><br>
+                <button style="width: 165px; height: 25px">
+                    Qo'shish
+                </button>
+            </form>
+        </section>
+        <hr>
+        <section id="talabalar">
+            <h2>Talabalar ro'yhati</h2>
+            <form>
+                <select name="filter_value" id="filter">
+                    <option value="id" {%if filter_value == "id"%} selected {%endif%}>
+                        ID bo'yicha
+                    </option>
+                    <option value="-id" {%if filter_value == "-id"%} selected {%endif%}>
+                        ID bo'yicha (teskari)
+                    </option>
+                    <option value="ism" {%if filter_value == "ism"%} selected {%endif%}>
+                        Ism bo'yicha
+                    </option>
+                    <option value="-ism" {%if filter_value == "-ism"%} selected {%endif%}>
+                        Ism bo'yicha (teskari)
+                    </option>
+                    <option value="familiya" {%if filter_value == "familiya"%} selected {%endif%}>
+                        Familiya bo'yicha
+                    </option>
+                    <option value="-familiya" {%if filter_value == "-familiya"%} selected {%endif%}>
+                        Familiya bo'yicha (teskari)
+                    </option>
+                    <option value="kurs" {%if filter_value == "kurs"%} selected {%endif%}>
+                        Kurs bo'yicha
+                    </option>
+                    <option value="-kurs" {%if filter_value == "-kurs"%} selected {%endif%}>
+                        Kurs bo'yicha (teskari)
+                    </option>
+                </select>
+                <input type="hidden" name="search_value" value="{{search_value}}">
+                <button>
+                    Qo'llash
+                </button>
+            </form>
+            <br>
+            {% for talaba in talabalar %}
+                <a href="/talabalar/{{talaba.id}}/" class="talaba">
+                    {{forloop.counter}}. {{talaba.ism}} {{talaba.familiya}} {{talaba.otasining_ismi}}
+                </a>
+                <a href="/talabalar/{{talaba.id}}/delete/confirm/" style="margin-left: 20px;" class="delete_button">
+                    O'chirish
+                </a>
+                <br>
+                <br>
+            {% endfor %}
+        </section>
+        <hr>
+        <section id="talaba_qidirish">
+            <h3>Talaba qidirish</h3>
+            <form>
+                <input type="text" name="search_value" value="{{search_value}}">
+                <input type="hidden" name="filter_value" value="{{filter_value}}">
+                <button>Qidirish</button>
+            </form>
+        </section>
+        <br>
+        {%if qidirilgan_talabalar%}
+            {%for talaba in qidirilgan_talabalar%}
+                <a href="/talabalar/{{talaba.id}}/" class="talaba">
+                    {{forloop.counter}}. {{talaba.ism}} {{talaba.familiya}} {{talaba.otasining_ismi}}
+                </a>
+                <a href="/talabalar/{{talaba.id}}/delete/confirm/" style="margin-left: 20px;" class="delete_button">
+                    O'chirish
+                </a>
+                <br>
+                <br>
+            {% endfor %}
+        {%endif%}
+    </main>
+    <hr>
+    <footer>
+        <a href="/">Ortga qaytish</a>
+    </footer>
+</body>
+</html>
+
